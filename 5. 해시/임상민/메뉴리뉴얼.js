@@ -1,3 +1,4 @@
+// 다시다시다시다시
 function findMostFrequentValues(arr) {
     let frequencyMap = new Map();
 
@@ -45,6 +46,7 @@ function wordCombination(word, wordNum, startIndex = 0, menuArray = [], result =
 function solution(orders, course) {
     let allCombination = [];
     let result = [];
+    let sample = [];
 
     for (let i = 0; i < course.length; i++) {
         let customer = [];
@@ -52,7 +54,8 @@ function solution(orders, course) {
             customer.push(...[...wordCombination(orders[j], Number(course[i]))]);
         }
         allCombination[i] = [...customer];
-        result.push(findMostFrequentValues(allCombination[i]));
+        sample.push(findMostFrequentValues(allCombination[i]));
+        result.push(...sample[i]);
     }
 
     return result;
