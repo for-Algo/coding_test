@@ -13,6 +13,7 @@ function solution(record) {
             user[uid] = nickname;
         }
     });
+
     for (let i = 0; i < message.length; i++) {
         result.push(`${user[message[i][0]]}${message[i][1]}`);
     }

@@ -1,24 +1,34 @@
-function findDuplicates(array) {
-    const seen = new Set(); // 이미 본 요소를 추적하는 Set
-    const duplicates = new Set(); // 중복된 요소를 추적하는 Set
+function findMostFrequentValues(arr) {
+    let frequencyMap = new Map();
 
-    // 배열의 각 요소를 순회
-    array.forEach((item) => {
-        // 요소가 이미 본 요소의 Set에 있으면
-        if (seen.has(item)) {
-            // 중복 요소의 Set에 추가
-            duplicates.add(item);
+    // 빈도수 계산
+    for (let value of arr) {
+        if (frequencyMap.has(value)) {
+            frequencyMap.set(value, frequencyMap.get(value) + 1);
         } else {
-            // 처음 본 요소를 Set에 추가
-            seen.add(item);
+            frequencyMap.set(value, 1);
         }
-    });
+    }
 
-    // 중복 요소를 배열로 변환하여 반환
-    return [...duplicates];
+    // 최대 빈도수 추출
+    let maxFrequency = 0;
+    let mostFrequentValues = [];
+
+    for (let [key, value] of frequencyMap) {
+        if (value > maxFrequency) {
+            maxFrequency = value;
+            mostFrequentValues = [key];
+        } else if (value === maxFrequency) {
+            mostFrequentValues.push(key);
+        }
+    }
+
+    // 가장 많이 등장한 값 중 하나만 선택 (사전순 정렬 후 첫번째 요소)
+    mostFrequentValues.sort();
+    return [mostFrequentValues[0]];
 }
 
-function loopFor(word, wordNum, startIndex = 0, menuArray = [], result = []) {
+function wordCombination(word, wordNum, startIndex = 0, menuArray = [], result = []) {
     if (menuArray.length === wordNum) {
         result.push(menuArray.join(''));
         return;
@@ -26,33 +36,30 @@ function loopFor(word, wordNum, startIndex = 0, menuArray = [], result = []) {
 
     for (let i = startIndex; i < word.length; i++) {
         menuArray.push(word[i]);
-        loopFor(word, wordNum, i + 1, menuArray, result);
+        wordCombination(word, wordNum, i + 1, menuArray, result);
         menuArray.pop();
     }
     return result;
 }
 
 function solution(orders, course) {
-    let everyMenuArray = [];
-    const result = {};
-    let courseMenu = [];
-    for (const courseNum of course) {
-        const allCombinations = [];
+    let allCombination = [];
+    let result = [];
 
-        for (const order of orders) {
-            // 현재 주문에서 courseNum 길이의 모든 조합을 생성
-            const combinations = loopFor(order, courseNum);
-            // 생성된 조합들을 allCombinations에 추가
-            allCombinations.push(...combinations);
+    for (let i = 0; i < course.length; i++) {
+        let customer = [];
+        for (let j = 0; j < orders.length; j++) {
+            customer.push(...[...wordCombination(orders[j], Number(course[i]))]);
         }
-
-        // 중복된 조합을 찾기
-        const duplicates = findDuplicates(allCombinations);
-
-        // 결과에 저장
-        result[courseNum] = duplicates;
+        allCombination[i] = [...customer];
+        result.push(findMostFrequentValues(allCombination[i]));
     }
+
     return result;
 }
 console.log(solution(['ABCFG', 'AC', 'CDE', 'ACDE', 'BCFG', 'ACDEH'], [2, 3, 4]));
-console.log(loopFor('AC', 2));
+
+//solution(['ABCFG', 'AC', 'CDE', 'ACDE', 'BCFG', 'ACDEH'], [2, 3, 4]);
+
+//console.log(wordCombination('AC', 2));
+// 실패
