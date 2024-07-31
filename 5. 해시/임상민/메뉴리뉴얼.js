@@ -1,4 +1,5 @@
 // 다시다시다시다시
+
 function findMostFrequentValues(arr) {
     let frequencyMap = new Map();
 
@@ -10,7 +11,6 @@ function findMostFrequentValues(arr) {
             frequencyMap.set(value, 1);
         }
     }
-
     // 최대 빈도수 추출
     let maxFrequency = 0;
     let mostFrequentValues = [];
@@ -24,7 +24,7 @@ function findMostFrequentValues(arr) {
         }
     }
 
-    // 가장 많이 등장한 값 중 하나만 선택 (사전순 정렬 후 첫번째 요소)
+    // 가장 많이 등장한 값 중 하나만 선택 (사전순 정렬 후 첫번째 요소) 이부분 틀림
     mostFrequentValues.sort();
     return [mostFrequentValues[0]];
 }
@@ -62,7 +62,5 @@ function solution(orders, course) {
 }
 console.log(solution(['ABCFG', 'AC', 'CDE', 'ACDE', 'BCFG', 'ACDEH'], [2, 3, 4]));
 
-//solution(['ABCFG', 'AC', 'CDE', 'ACDE', 'BCFG', 'ACDEH'], [2, 3, 4]);
-
-//console.log(wordCombination('AC', 2));
+console.log(wordCombination('ABCFG', 2));
 // 실패
