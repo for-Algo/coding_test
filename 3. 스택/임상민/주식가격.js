@@ -3,7 +3,7 @@ function solution(prices) {
     let answer = [];
     for (let i = 0; i < prices.length; i++) {
         record = prices[i];
-        for (let j = i + 1; j < prices.length; j++) {
+        for (let j = i; j < prices.length; j++) {
             if (record > prices[j]) {
                 answer.push(j - i);
                 break;
